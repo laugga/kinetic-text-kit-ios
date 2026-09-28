@@ -1,8 +1,9 @@
-# KineticTextKit
+# kinetic-text-kit-ios
 
-A Swift text-animation kit: a `CAShapeLayer` subclass that renders text as a
-path and animates between strings, fonts and weights, plus the UIKit and
-SwiftUI controls built on it. It is used by the Lightmate app.
+A Swift text-animation kit, the `KineticTextKit` module: a `CAShapeLayer`
+subclass that renders text as a path and animates between strings, fonts and
+weights, plus the UIKit and SwiftUI controls built on it. It is used by the
+Lightmate app.
 
 The repository is semi-experimental — some components do not have a purpose
 yet.
