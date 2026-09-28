@@ -17,6 +17,14 @@ weights, plus the UIKit controls built on top of it. Swift + UIKit, packaged
 with Swift Package Manager (`Package.swift`, swift-tools-version 5.7). It has
 **no dependencies of its own**.
 
+**The repository is `kinetic-text-kit-ios`; the module in it is
+`KineticTextKit`.** They differ on purpose: `CONVENTIONS.md` → *Names* names a
+library's repository `<product>-<platform>` and keeps its module name, so a
+rename never touches an `import`. Do not rename either to match the other —
+`Package.swift`, `Sources/KineticTextKit/`, the `KineticTextKit` scheme and
+`Example/KineticTextKit.xcodeproj` all carry the module name, which is what
+that section asks of them.
+
 **What it is for:** the Lightmate app uses it, as a Swift package. That app's
 repository is private, so this file says what the package is for and nothing
 more specific about the app. See the branch-pinning gotcha below — it is the
@@ -255,7 +263,7 @@ Prefix the branch with the change type (lowercase):
   the app's repository, not this one.
 - **This repository is public, and it is cloned over HTTPS**, not SSH. Older
   notes that call it private and in need of credentialed access are out of
-  date: `gh repo view laugga/KineticTextKit` reports `PUBLIC`. Nothing special
+  date: `gh repo view laugga/kinetic-text-kit-ios` reports `PUBLIC`. Nothing special
   is needed to check it out. Being public also means: no secrets, no customer
   data, no internal URLs — and nothing specific about the private repositories
   that use it. Saying what the package is for is fine; their paths, files and
