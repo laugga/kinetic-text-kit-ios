@@ -99,9 +99,12 @@ make deploy   # delegates to $(MAKE) -C Example deploy
 - **Configuration** — `Example/Makefile` names the destination directly as
   `FIREBASE_PROJECT`/`FIREBASE_APP`/`FIREBASE_GROUPS`: project
   `lightmate-development-390f6` ("Lightmate Development"), app
-  `com.laugga.KineticTextKit`. The Example app links no Firebase SDK, so
-  there is no `GoogleService-Info.plist` to read these from instead — see the
-  gotchas.
+  `1:480717957783:ios:a6d14a3477535a158f97d2` (*KineticTextKit*), registered
+  for `com.laugga.kinetic-text-kit-example`. The Example app links no Firebase
+  SDK, so there is no `GoogleService-Info.plist` to read these from instead —
+  see the gotchas. A registered bundle identifier never changes, so a new one
+  is a new Firebase app: `laugga/ops`'s `host/firebase-app.sh` registers it and
+  rewrites `FIREBASE_APP`.
 - **Build and signing** — Debug configuration, automatic signing, team
   `JJC3QT2D2L`. `Example/Support/ExportOptions.plist` exports with
   `method = debugging`, so only devices registered in that Apple team can
@@ -142,16 +145,24 @@ KineticTextKit`, public API only.
 - **Public API only.** Never `@testable import`, and never widen the package's
   API to suit the example — if a scenario cannot be written against the public
   surface, that is worth knowing, not working around.
-- **Naming.** Project, target, product and display name are all
-  `KineticTextKit`; the app's Swift module is `KineticTextKitExample`, so it
-  does not collide with the package module it imports. The shared scheme is
-  `Example`, the same name in every component repository.
-- **Do not remove `PROJECT_TEMP_DIR`** from the project's build settings. The
-  app target and the package target are both called `KineticTextKit`, and by
-  default both put their intermediates in `KineticTextKit.build/…/KineticTextKit.build`.
-  Xcode 26 refuses that with *Multiple commands produce …*; Xcode 27 happens
-  to cope. The setting moves the example's intermediates to
-  `KineticTextKitExample.build`, so both build.
+- **Naming.** The app is called *KineticTextKit*, but its target is
+  `Example`. The target, its product and its module are all `Example` —
+  `PRODUCT_NAME = $(TARGET_NAME)`, so the build is `Example.app` and `deploy`
+  uploads `Example.ipa` — and so is the shared scheme, the same name in every
+  component repository. The name on the home screen is the display name,
+  `INFOPLIST_KEY_CFBundleDisplayName = KineticTextKit`, set in both
+  configurations, and it is also what the Firebase app is nicknamed: whatever
+  the build calls itself (`CONVENTIONS.md` → *Names* → *Firebase app
+  nickname*). The bundle identifier is `com.laugga.kinetic-text-kit-example`.
+  That is `template-library-swift`'s Example exactly; the project and the
+  source directory keep the library's name, as the template's do.
+- **Do not name the target after the library.** A module called
+  `KineticTextKit` would clash with the package it imports, and a target
+  called `KineticTextKit` puts its intermediates in the same
+  `KineticTextKit.build/…/KineticTextKit.build` as the package target — Xcode
+  26 refuses that with *Multiple commands produce …*. The target was once
+  named that way and needed a `PRODUCT_MODULE_NAME` and a `PROJECT_TEMP_DIR`
+  override to build; as `Example` it needs neither, so neither is set.
 - **Layout.** `App/` holds the lifecycle, `Catalog/` the index
   (`Catalog.swift` is the list of every entry), `Scenarios/<Type>/` one file per
   scenario, `Resources/` the asset catalog. The project uses a synchronised
