@@ -11,11 +11,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		LM606000000000000000A001 /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		LM606000000000000000A001 /* KineticTextKitExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KineticTextKitExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		LM606000000000000000C001 /* KineticTextKit */ = {isa = PBXFileSystemSynchronizedRootGroup; path = KineticTextKit; sourceTree = "<group>"; };
+		LM606000000000000000C001 /* KineticTextKitExample */ = {isa = PBXFileSystemSynchronizedRootGroup; path = KineticTextKitExample; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,7 +33,7 @@
 		LM606000000000000000F001 = {
 			isa = PBXGroup;
 			children = (
-				LM606000000000000000C001 /* KineticTextKit */,
+				LM606000000000000000C001 /* KineticTextKitExample */,
 				LM6060000000000000010001 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -41,7 +41,7 @@
 		LM6060000000000000010001 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				LM606000000000000000A001 /* Example.app */,
+				LM606000000000000000A001 /* KineticTextKitExample.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -49,9 +49,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		LM6060000000000000020001 /* Example */ = {
+		LM6060000000000000020001 /* KineticTextKitExample */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = LM6060000000000000030001 /* Build configuration list for PBXNativeTarget "Example" */;
+			buildConfigurationList = LM6060000000000000030001 /* Build configuration list for PBXNativeTarget "KineticTextKitExample" */;
 			buildPhases = (
 				LM6060000000000000040001 /* Sources */,
 				LM606000000000000000E001 /* Frameworks */,
@@ -62,14 +62,14 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				LM606000000000000000C001 /* KineticTextKit */,
+				LM606000000000000000C001 /* KineticTextKitExample */,
 			);
-			name = Example;
+			name = KineticTextKitExample;
 			packageProductDependencies = (
 				LM606000000000000000D001 /* KineticTextKit */,
 			);
-			productName = Example;
-			productReference = LM606000000000000000A001 /* Example.app */;
+			productName = KineticTextKitExample;
+			productReference = LM606000000000000000A001 /* KineticTextKitExample.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -87,7 +87,7 @@
 					};
 				};
 			};
-			buildConfigurationList = LM6060000000000000070001 /* Build configuration list for PBXProject "KineticTextKit" */;
+			buildConfigurationList = LM6060000000000000070001 /* Build configuration list for PBXProject "KineticTextKitExample" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -104,7 +104,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				LM6060000000000000020001 /* Example */,
+				LM6060000000000000020001 /* KineticTextKitExample */,
 			);
 		};
 /* End PBXProject section */
@@ -245,7 +245,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		LM6060000000000000070001 /* Build configuration list for PBXProject "KineticTextKit" */ = {
+		LM6060000000000000070001 /* Build configuration list for PBXProject "KineticTextKitExample" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				LM6060000000000000090001 /* Debug */,
@@ -254,7 +254,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		LM6060000000000000030001 /* Build configuration list for PBXNativeTarget "Example" */ = {
+		LM6060000000000000030001 /* Build configuration list for PBXNativeTarget "KineticTextKitExample" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				LM60600000000000000B0001 /* Debug */,

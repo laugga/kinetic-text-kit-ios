@@ -21,9 +21,9 @@ with Swift Package Manager (`Package.swift`, swift-tools-version 5.7). It has
 `KineticTextKit`.** They differ on purpose: `CONVENTIONS.md` → *Names* names a
 library's repository `<product>-<platform>` and keeps its module name, so a
 rename never touches an `import`. Do not rename either to match the other —
-`Package.swift`, `Sources/KineticTextKit/`, the `KineticTextKit` scheme and
-`Example/KineticTextKit.xcodeproj` all carry the module name, which is what
-that section asks of them.
+`Package.swift`, `Sources/KineticTextKit/` and the `KineticTextKit` scheme all
+carry the module name, and `Example/KineticTextKitExample.xcodeproj` is named
+from it, which is what that section asks of them.
 
 **What it is for:** the Lightmate app uses it, as a Swift package. That app's
 repository is private, so this file says what the package is for and nothing
@@ -81,8 +81,8 @@ Both were verified from a clean checkout of `main`. Notes:
 - **The example app is built separately**, through its own project and the
   shared `Example` scheme. `make build` and `make test` do not touch it:
   ```bash
-  xcodebuild build -project Example/KineticTextKit.xcodeproj -scheme Example \
-    -destination 'generic/platform=iOS Simulator'
+  xcodebuild build -project Example/KineticTextKitExample.xcodeproj \
+    -scheme Example -destination 'generic/platform=iOS Simulator'
   ```
 
 ## Try it
@@ -130,7 +130,7 @@ make deploy   # delegates to $(MAKE) -C Example deploy
 |---|---|
 | `Sources/KineticTextKit/` | The whole library, flat — one type per file. `KineticTextLayer.swift` is the core; the rest builds on it. `HapticFeedback.swift` is internal (`HapticFeedbackPlaying` / `HapticFeedbackPlayer`), used by the switches. |
 | `Tests/KineticTextKitTests/` | XCTest unit tests. Thin — two tests at present. |
-| `Example/` | The example app — `KineticTextKit.xcodeproj`, its sources, and its own `Makefile` (`build`, `test`, `archive`, `deploy`). See below, and "Try it" above. |
+| `Example/` | The example app — `KineticTextKitExample.xcodeproj`, its sources in `KineticTextKitExample/`, and its own `Makefile` (`build`, `test`, `archive`, `deploy`). See below, and "Try it" above. |
 | `Playground/` | Xcode playground samples. **Not a build target.** See below. |
 | `Package.swift` | One library product, one target, one test target. No dependencies. |
 
@@ -145,29 +145,35 @@ KineticTextKit`, public API only.
 - **Public API only.** Never `@testable import`, and never widen the package's
   API to suit the example — if a scenario cannot be written against the public
   surface, that is worth knowing, not working around.
-- **Naming.** The app is called *KineticTextKit*, but its target is
-  `Example`. The target, its product and its module are all `Example` —
-  `PRODUCT_NAME = $(TARGET_NAME)`, so the build is `Example.app` and `deploy`
-  uploads `Example.ipa` — and so is the shared scheme, the same name in every
-  component repository. The name on the home screen is the display name,
-  `INFOPLIST_KEY_CFBundleDisplayName = KineticTextKit`, set in both
+- **Naming.** The app is `KineticTextKitExample` in every name but one: its
+  display name is *KineticTextKit*. That is `laugga/ops`'s `CONVENTIONS.md` →
+  *Names* → *A library's Example app*, and it is where the rule is changed.
+  The target is `KineticTextKitExample`, and its product and its module follow
+  it — `PRODUCT_NAME = $(TARGET_NAME)` and no `PRODUCT_MODULE_NAME`, so the
+  build is `KineticTextKitExample.app` and `deploy` uploads
+  `KineticTextKitExample.ipa`. The project is
+  `Example/KineticTextKitExample.xcodeproj` and its sources are in
+  `Example/KineticTextKitExample/`. The name on the home screen is the display
+  name, `INFOPLIST_KEY_CFBundleDisplayName = KineticTextKit`, set in both
   configurations, and it is also what the Firebase app is nicknamed: whatever
-  the build calls itself (`CONVENTIONS.md` → *Names* → *Firebase app
-  nickname*). The bundle identifier is `com.laugga.kinetic-text-kit-example`.
-  That is `template-library-swift`'s Example exactly; the project and the
-  source directory keep the library's name, as the template's do.
-- **Do not name the target after the library.** A module called
-  `KineticTextKit` would clash with the package it imports, and a target
-  called `KineticTextKit` puts its intermediates in the same
+  the build calls itself (*Firebase app nickname*, in the same section). The
+  bundle identifier is `com.laugga.kinetic-text-kit-example`. The shared
+  scheme is `Example`, the same name in every component repository: it is what
+  `make` and `xcodebuild -scheme` type, and it names no target.
+- **Do not name the target after the library, or plain `Example`.** A module
+  called `KineticTextKit` would clash with the package it imports, and a
+  target called `KineticTextKit` puts its intermediates in the same
   `KineticTextKit.build/…/KineticTextKit.build` as the package target — Xcode
   26 refuses that with *Multiple commands produce …*. The target was once
   named that way and needed a `PRODUCT_MODULE_NAME` and a `PROJECT_TEMP_DIR`
-  override to build; as `Example` it needs neither, so neither is set.
+  override to build; as `KineticTextKitExample` it needs neither, so neither
+  is set. A target named `Example` builds too, but it is then the same target,
+  module and `.ipa` in every library, and says whose example it is nowhere.
 - **Layout.** `App/` holds the lifecycle, `Catalog/` the index
   (`Catalog.swift` is the list of every entry), `Scenarios/<Type>/` one file per
   scenario, `Resources/` the asset catalog. The project uses a synchronised
-  folder, so a new file under `Example/KineticTextKit/` is picked up without
-  editing `project.pbxproj`.
+  folder, so a new file under `Example/KineticTextKitExample/` is picked up
+  without editing `project.pbxproj`.
 - **Adding a scenario** is a file under `Scenarios/<Type>/` plus an entry in
   `Catalog.swift`. Each scenario carries a `#Preview` of itself.
 - **The app is pinned to light appearance.** The components' default colours
