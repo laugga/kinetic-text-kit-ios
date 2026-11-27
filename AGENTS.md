@@ -259,8 +259,10 @@ Prefix the branch with the change type (lowercase):
   The full URL goes in every task PR, partial work included — it is what links
   the PR to the task. The magic word alone decides completion: `closes` when
   the task is finished, `ref` when it is not.
-- Open PRs against `main` — this repository's default and integration branch.
-  Keep them focused and reviewable.
+- Open PRs against `dev` — this repository's default and integration branch.
+  Keep them focused and reviewable. `main` moves only by a pull request from
+  `dev`, merged with a merge commit, and no work targets it — ops
+  `CONVENTIONS.md` → *Branches*.
 - **Never merge a pull request.**
 
 ### Code style
@@ -280,11 +282,12 @@ Prefix the branch with the change type (lowercase):
   project-wide credential this public repository has no functional use for.
   If the Example app ever does link the Firebase SDK for something real,
   that's the point to add the plist and switch the Makefile to read from it.
-- **`main` ships straight to the app. There are no releases.** The repository
-  has no tags, and the Lightmate app follows this package's `main` **branch**,
-  not a version. So anything merged to `main` reaches the app the next time it
-  resolves packages — there is no version gate in between. Treat every merge
-  as potentially breaking a consumer, and check the app's usage before changing
+- **`main` is what the app consumes, and only a merge from `dev` moves it.**
+  The repository has no tags, and the Lightmate app follows this package's
+  `main` **branch**, not a version. Work lands on `dev`; whatever is then
+  merged from `dev` into `main` reaches the app the next time it resolves
+  packages — that merge is the only gate in between. Treat every change as
+  potentially breaking a consumer, and check the app's usage before changing
   or removing public API. Moving the app onto a new revision is a change in
   the app's repository, not this one.
 - **This repository is public, and it is cloned over HTTPS**, not SSH. Older
@@ -295,10 +298,10 @@ Prefix the branch with the change type (lowercase):
   that use it. Saying what the package is for is fine; their paths, files and
   configuration do not belong here, in code, docs or comments.
 - **CI gates the merge.** `.github/workflows/ci.yml` runs `make build` and
-  `make test` on `macos-latest` for every pull request into `main`, and a human
-  cannot merge without it passing. Xcode Cloud isn't an option here: it needs
-  an app or framework target in an Xcode project, and this SwiftPM package has
-  neither.
+  `make test` on `macos-latest` for every pull request into `dev` or `main`,
+  and a human cannot merge without it passing. Xcode Cloud isn't an option
+  here: it needs an app or framework target in an Xcode project, and this
+  SwiftPM package has neither.
 - **The deployment target is iOS 12.0** — `Package.swift` declares no
   `platforms:`, so SwiftPM's default for tools-version 5.7 applies, and builds
   come out as `arm64-apple-ios12.0-simulator`. Anything newer must be behind
